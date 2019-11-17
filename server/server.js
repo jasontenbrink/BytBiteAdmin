@@ -4,9 +4,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const util = require("util");
-const bcrypt = require("bcrypt");
-const database = require("./dbQueries");
-const SALT_FACTOR = 10;
+const { toDB, fromDB } = require("./utils");
+const moment = require("moment");
 
 console.log(process.env.DATABASE_URL);
 const knex = require("knex")(process.env.DATABASE_URL);
@@ -22,6 +21,60 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../dist")));
 
 app.set("port", process.env.PORT || 8000);
+
+const initialReview = {
+  userId: 2, //2 jason.tenbrink+bigkittyfattybat@gmail.com
+  question1: 3,
+  question2: 3,
+  question3: 3,
+  question4: 3,
+  question5: 3,
+  question6: 4,
+  question7: 4,
+  question8: 4,
+  question9: 4,
+  question10: 4
+};
+app
+  .route("/vendors")
+  .get(async (req, res) => {
+    console.log(knex);
+    const data = await knex("vendors");
+    res.json(data);
+    console.log(data);
+  })
+  .post(async (req, res) => {
+    req.body = {
+      name: "AIM Consulting Group, LLC",
+      addressLine1: "Southdale Office Center",
+      addressLine2: "6600 France Ave. South, Suite 245",
+      city: "Edina",
+      state: "MN",
+      zip: "55435",
+      phone: "9523147255"
+    };
+    try {
+      const [vendorId] = await knex("vendors").insert(
+        toDB({ ...req.body, created: moment(), updated: moment() }),
+        "id"
+      );
+      console.log("vendor", vendorId);
+
+      await knex("reviews").insert(
+        toDB({
+          ...initialReview,
+          vendorId,
+          created: moment(),
+          updated: moment()
+        })
+      );
+
+      // add a review to that vendor here.  Gie it 3.5 stars
+      res.status(200).send("Vendor added");
+    } catch (e) {
+      res.status(500).send(e);
+    }
+  });
 
 // app
 //   .route("/tenants")

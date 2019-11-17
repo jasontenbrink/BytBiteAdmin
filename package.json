@@ -20,6 +20,9 @@
     "express": "",
     "html-loader": "",
     "knex": "^0.20.1",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.snakecase": "^4.1.1",
+    "moment": "^2.24.0",
     "pg": "^7.12.1",
     "react": "",
     "react-dom": "",
@@ -34,10 +37,12 @@
   },
   "scripts": {
     "start": "node server/server.js",
+    "start:local": "nodemon server/server.js",
     "webpack": "webpack --watch"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.7.0",
+    "nodemon": "^1.19.4",
     "webpack-cli": "^3.3.10"
   }
 }
