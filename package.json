@@ -22,7 +22,7 @@
     "knex": "^0.20.1",
     "lodash.camelcase": "^4.3.0",
     "lodash.snakecase": "^4.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "pg": "^7.12.1",
     "react": "",
     "react-dom": "",
