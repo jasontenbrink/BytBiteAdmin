@@ -19,7 +19,7 @@
     "dotenv": "",
     "express": "",
     "html-loader": "",
-    "knex": "^0.20.1",
+    "knex": "^2.4.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.snakecase": "^4.1.1",
     "moment": "^2.24.0",
